@@ -48,7 +48,7 @@ kind: Scheduled
 metadata:
     source:
         kind: Community
-    author: Microsoft Security Research
+    author: MicrosoftTest
     support:
         tier: Community
     categories:
