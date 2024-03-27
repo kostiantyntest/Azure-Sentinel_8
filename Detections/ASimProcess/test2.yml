@@ -48,7 +48,8 @@ kind: Scheduled
 metadata:
     source:
         kind: Community
-    author: MicrosoftTest
+    author: 
+        name: MicrosoftTest
     support:
         tier: Community
     categories:
