@@ -1,0 +1,9 @@
+id: 9838ec90-cd92-4d4e-a940-dd40de396fa5
+name: Hunting2
+description: |
+  'This hunting query identifies a user that add/invite a member to the organization for the first time. This technique can be leveraged by attackers to add stealth account access to the organization.'
+requiredDataConnectors: []
+tactics:
+  - Persistence
+relevantTechniques:
+  - T1136
