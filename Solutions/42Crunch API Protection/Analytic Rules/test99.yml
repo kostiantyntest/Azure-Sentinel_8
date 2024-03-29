@@ -1,5 +1,6 @@
 id: bbb69341-d8ac-4b0e-ad33-b84169720d2f
 name: TestSync
+author: Test
 description: |
   '42Crunch API protection against API scraping'
 severity: High
