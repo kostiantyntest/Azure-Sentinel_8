@@ -6,7 +6,7 @@ description: |
 requiredDataConnectors: []
 tactics:
   - Exfiltration
-author: Test!"
+author: name:  Test!"
 severity: medium
 relevantTechniques:
   - T1011
