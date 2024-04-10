@@ -1,0 +1,4 @@
+id: baba6e5d-e1e3-47f5-a1e2-485f3f21da57
+name: Commands
+description: |
+  'As part of content migration, this file is moved to new location. you can find here: https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/Windows%20Security%20Events/Hunting%20Queries/CommandsexecutedbyWMIonnewhosts-potentialImpacket.yaml'
