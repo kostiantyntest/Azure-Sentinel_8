@@ -1,0 +1,31 @@
+id: 6945d5ea-230b-4bb8-9d57-256804c790dc
+name: test32Sync
+description: |
+  'Looks for Base64-encoded commands associated with the Nishang reverse TCP shell.
+  Ref: https://github.com/samratashok/nishang/blob/master/Shells/Invoke-PowerShellTcp.ps1'
+requiredDataConnectors: []
+tactics:
+  - Exfiltration
+author: Test!"
+severity: medium
+relevantTechniques:
+  - T1011
+query: |
+  imProcessCreate
+  | where Process has_any ("powershell.exe","powershell_ise.exe") and CommandLine contains "-e" 
+  | mvexpand SS = split(CommandLine, " ") 
+  | where SS matches regex "[A-Za-z0-9+/]{50,}[=]{0,2}" 
+  | extend DecodeString = base64_decode_tostring(tostring(SS)) 
+  | extend FinalString = replace("\\0", "", DecodeString) 
+  | where FinalString has "tcpclient" and FinalString contains "$" and (FinalString contains "invoke" or FinalString contains "iex") 
+  | extend timestamp = TimeGenerated, AccountCustomEntity = User, HostCustomEntity = Dvc
+
+entityMappings:
+  - entityType: Account
+    fieldMappings:
+      - identifier: FullName
+        columnName: AccountCustomEntity
+  - entityType: Host
+    fieldMappings:
+      - identifier: FullName
+        columnName: HostCustomEntity
