@@ -1,0 +1,4 @@
+id: dbadf038-7ca7-401a-9730-a20478327195
+name: Windows System Shutdown/Reboot (Normalized Process Events)
+description: |
+  'This detection uses Normalized Process Events to detect System Shutdown/Reboot (MITRE Technique: T1529)'
