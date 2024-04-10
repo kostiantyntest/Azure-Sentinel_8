@@ -4,6 +4,8 @@ description: |
   'Looks for Base64-encoded commands associated with the Nishang reverse TCP shell.
   Ref: https://github.com/samratashok/nishang/blob/master/Shells/Invoke-PowerShellTcp.ps1'
 requiredDataConnectors: []
+queryFrequency: 2h
+queryPeriod: 2h
 tactics:
   - Exfiltration
 author: name:  Test!"
