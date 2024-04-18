@@ -1,5 +1,5 @@
 id: a82916ec-dd74-4fa0-9a50-5223873f6869
-name: User login from different countries within 3 hours (Uses Authentication Normalization)
+name: User35
 description: |
   'This query searches for successful user logins from different countries within 3 hours.
    To use this analytics rule, make sure you have deployed the [ASIM normalization parsers](https://aka.ms/ASimAuthentication)'
