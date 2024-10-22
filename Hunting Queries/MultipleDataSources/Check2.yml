@@ -1,0 +1,5 @@
+id: 9db94541-87ff-4d77-90d8-d40708e68484
+name: Check2
+description: |
+  'Identifies anomolies in signin events based on the volume of signin events over time. Use this to identify suspicious authentication patterns such as spikes in activity or out of hours events.
+  Ref : https://docs.microsoft.com/azure/active-directory/fundamentals/security-operations-privileged-accounts#things-to-monitor'
