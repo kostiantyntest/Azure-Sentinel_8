@@ -1,0 +1,6 @@
+id: fa974a5b-4c52-46ea-b836-f22611ce1361
+name: SuspiciousChangeName2222222
+description: |
+  Attackers can use Adfind which is administrative tool to gather information about Domain controllers, ADFS Servers. They may also rename executables with other benign tools on the system.
+  Below query will look for adfind usage in commandline arguments irrespective of executable name in short span of time. You can limit query this to your DC and ADFS servers.
+ 
