@@ -10,7 +10,7 @@ tactics:
   - Collection
 relevantTechniques:
   - T1119
-query: |
+ |
   imProcessCreate
    | where Process has_any ("cmd.exe", "powershell.exe", "PowerShell_ISE.exe")
    | where CommandLine has "Add-PSSnapin Microsoft.Exchange.Management.Powershell.Snapin"
