@@ -1,5 +1,5 @@
 id: 0009dc83-9e97-452c-afcc-baebdb0ddf7c
-name: Normal
+name: Normal_2
 description: |
   'This hunting query looks for hosts that have attempted to interact with the Discord CDN. This activity is not normally invoked from the command line and could indicate C2, exfiltration, or malware delivery activity.'
 requiredDataConnectors: []
