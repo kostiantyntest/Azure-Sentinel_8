@@ -1,0 +1,4 @@
+id: 88b56a65-d713-4947-ae3a-77fad6637a67
+name: Test
+description: |
+  'This hunting query looks for hosts that have attempted to interact with the Discord CDN. This activity is not normally invoked from the command line and could indicate C2, exfiltration, or malware delivery activity.'
