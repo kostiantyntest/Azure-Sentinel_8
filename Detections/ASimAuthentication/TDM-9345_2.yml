@@ -36,7 +36,7 @@ incidentConfiguration:
     reopenClosedIncident: false
     lookbackDuration: 1h
     matchingMethod: AllEntities
-suppressionDuration: 1y 10w 5h 2m
+suppressionDuration: 10w
 alertDetailsOverride:
   alertDynamicProperties: []
 eventGroupingSettings:
