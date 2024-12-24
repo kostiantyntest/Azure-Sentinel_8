@@ -28,7 +28,7 @@ query: |-
   | extend
       ActorUsername = actor_details.email
       , SrcIpAddr = session.ip
-suppressionEnabled: false
+suppressionEnabled: true
 incidentConfiguration:
   createIncident: true
   groupingConfiguration:
