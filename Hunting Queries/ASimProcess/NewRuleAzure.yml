@@ -3,7 +3,6 @@ name: NewRuleAzure
 description: |
   'Invoke-PowerShellTcpOneLine is a PowerShell script to create a simple and small reverse shell. It can be abused by attackers to exfiltrate data. This query looks for command line activity similar to Invoke-PowerShellTcpOneLine.'
 requiredDataConnectors: []
-suppressionEnabled: true
 tactics:
   - Exfiltration
 relevantTechniques:
