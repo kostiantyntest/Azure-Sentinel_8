@@ -13,7 +13,7 @@ queryPeriod: 15m
 triggerOperator: gt
 triggerThreshold: 0
 suppressionDuration: 5h
-suppressionEnabled: true
+suppressionEnabled: false
 tactics:
 - InitialAccess
 - Discovery
