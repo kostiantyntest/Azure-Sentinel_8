@@ -1,0 +1,52 @@
+id: 216b3e5a-3336-410a-ba69-2870c2c9e74e
+name: TDM-TEST-NEW
+version: 1.0.1
+kind: Scheduled
+description: |-
+  This will alert when changes have been made to the SSO configuration. Once this analytics rule is triggered it will group all related future alerts for upto an hour when all related entities are the same.
+
+  Ref: https://1password.com/
+  Ref: https://github.com/securehats/
+severity: Medium
+requiredDataConnectors:
+  - connectorId: 1Password
+    dataTypes:
+      - OnePasswordEventLogs_CL
+queryFrequency: 5m
+queryPeriod: 5m
+triggerOperator: gt
+triggerThreshold: 0
+tactics:
+- Persistence
+relevantTechniques:
+- T1556
+query: |-
+  OnePasswordEventLogs_CL
+  | where log_source == "auditevents"
+  | where action has_any("enblsso", "disblsso", "chngpsso", "chngasso", "chngdsso", "addgsso", "delgsso")
+  | where object_type == "sso"
+  | extend
+      ActorUsername = actor_details.email
+      , SrcIpAddr = session.ip
+suppressionEnabled: true
+incidentConfiguration:
+  createIncident: true
+  groupingConfiguration:
+    enabled: true
+    reopenClosedIncident: false
+    lookbackDuration: 1h
+    matchingMethod: AllEntities
+suppressionDuration: 5h 2m
+alertDetailsOverride:
+  alertDynamicProperties: []
+eventGroupingSettings:
+  aggregationKind: SingleAlert
+entityMappings:
+- entityType: Account
+  fieldMappings:
+  - identifier: FullName
+    columnName: ActorUsername
+- entityType: IP
+  fieldMappings:
+  - identifier: Address
+    columnName: SrcIpAddr
