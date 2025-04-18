@@ -20,14 +20,6 @@ tags:
     version: 1.0.0
 query: |
   imAuthentication
-  | where EventResult =='Failure'
-  | where EventResultDetails == 'User disabled'
-  | summarize StartTime=min(EventStartTime), EndTime=max(EventEndTime), disabledAccountLoginAttempts = count()
-        , disabledAccountsTargeted = dcount(TargetUsername), disabledAccountSet = make_set(TargetUsername)
-        , applicationsTargeted = dcount(TargetAppName)
-        , applicationSet = make_set(TargetAppName) 
-        by SrcDvcIpAddr, Type
-  | order by disabledAccountLoginAttempts desc
 
 entityMappings:
   - entityType: IP
