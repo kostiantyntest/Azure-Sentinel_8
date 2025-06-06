@@ -65,7 +65,7 @@ function ReadFileContent($filePath) {
         }
     }
     catch {
-        Write-Host "Error occured in ReadFileContent. Error details : $_"
+        Write-Host "Error occured in ReadFileContent. Error details : $_" -ForegroundColor Red
         return $null;
     }
 }
@@ -1043,8 +1043,8 @@ function PrepareSolutionMetadata($solutionMetadataRawContent, $contentResourceDe
                         contentId = "[variables('_$fileName')]";
                         version   = "[variables('playbookVersion$global:playbookCounter')]";
                     };
-
-                    if($fileName.ToLower() -match "FunctionApp")
+                    
+                    if($IsFunctionAppResource)
                     {
                         $functionAppsPlaybookId = $playbookData.parameters.FunctionAppName.defaultValue
 
@@ -1903,6 +1903,8 @@ function PrepareSolutionMetadata($solutionMetadataRawContent, $contentResourceDe
                             $instructionArray = $templateSpecConnectorData.instructionSteps
                             ($instructionArray | ForEach {if($_.description -and $_.description.IndexOf('[Deploy To Azure]') -gt 0){$existingFunctionApp = $true;}})
 
+                            $hasFunctionAppManualDeploymentText = $instructionArray | Where-Object { $_.title -and $_.title.IndexOf('Manual Deployment of Azure Functions') -gt 0 }
+
                             if ($existingFunctionApp -eq $false)
                             {
                                 # check if only instructions object is present without any description
@@ -1910,6 +1912,7 @@ function PrepareSolutionMetadata($solutionMetadataRawContent, $contentResourceDe
                                 {
                                     if ($null -eq $item.description -and $item.instructions.Count -gt 0)
                                     {
+                                        $hasFunctionAppManualDeploymentText = $false
                                         foreach ($instructionItem in $item.instructions)
                                         {
                                             $parameterCount = $instructionItem.parameters.Count -gt 0
@@ -1925,6 +1928,15 @@ function PrepareSolutionMetadata($solutionMetadataRawContent, $contentResourceDe
                                                         break
                                                     }
                                                 }
+
+                                                foreach ($desc in $instructionItem.parameters.instructionSteps)
+                                                {
+                                                    if ($desc.title -and $desc.title.IndexOf('Manual Deployment of Azure Functions') -gt 0)
+                                                    {
+                                                        $hasFunctionAppManualDeploymentText = $true
+                                                        break
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -1933,7 +1945,7 @@ function PrepareSolutionMetadata($solutionMetadataRawContent, $contentResourceDe
 
                             if($existingFunctionApp)
                             {
-                                $templateSpecConnectorData.title = ($templateSpecConnectorData.title.Contains("using Azure Functions")) ? $templateSpecConnectorData.title : $templateSpecConnectorData.title + " (using Azure Functions)"
+                                $templateSpecConnectorData.title = ($templateSpecConnectorData.title.Contains("using Azure Functions")) ? $templateSpecConnectorData.title : $hasFunctionAppManualDeploymentText ? $templateSpecConnectorData.title + " (using Azure Functions)" : $templateSpecConnectorData.title;
                             }
                         }
 
@@ -2195,7 +2207,7 @@ function PrepareSolutionMetadata($solutionMetadataRawContent, $contentResourceDe
                             }
                         }
                         $connectDataSourcesLink = [PSCustomObject] @{
-                            name    = "dataconnectors-link2";
+                            name    = "dataconnectors-link$($global:connectorCounter)";
                             type    = "Microsoft.Common.TextBlock";
                             options = [PSCustomObject] @{
                                 link = [PSCustomObject] @{
@@ -2569,7 +2581,7 @@ function PrepareSolutionMetadata($solutionMetadataRawContent, $contentResourceDe
                             $yaml = ConvertFrom-YAML $content # Convert YAML to PSObject
                         }
                         catch {
-                            Write-Host "Failed to deserialize $file" -ForegroundColor Red
+                            Write-Host "Failed to deserialize $file, Error Details: $_" -ForegroundColor Red
                             break;
                         }
 
@@ -2717,6 +2729,10 @@ function PrepareSolutionMetadata($solutionMetadataRawContent, $contentResourceDe
                                 if($yamlField -eq "entityMappings" -and $yaml.$yamlField.length -lt 2)
                                 {
                                     $alertRule.entityMappings = @($alertRule.entityMappings);
+                                }
+                                elseif($yamlField -eq "sentinelEntitiesMappings" -and $yaml.$yamlField.length -lt 2)
+                                {
+                                    $alertRule.sentinelEntitiesMappings = @($alertRule.sentinelEntitiesMappings);
                                 }
                             }
                         }
@@ -3112,6 +3128,9 @@ function PrepareSolutionMetadata($solutionMetadataRawContent, $contentResourceDe
             if ($null -ne $global:baseCreateUiDefinition.parameters.steps -and 
             $($global:baseCreateUiDefinition.parameters.steps).GetType() -ne [System.Object[]]) {
                 $global:baseCreateUiDefinition.parameters.steps = @($global:baseCreateUiDefinition.parameters.steps)
+            } elseif ($null -eq $global:baseCreateUiDefinition.parameters.steps) {
+                # when there is no content then create ui fails as step is null
+                $global:baseCreateUiDefinition.parameters.steps = @(@{}) # [{}]
             }
             $global:baseCreateUiDefinition | ConvertTo-Json -Depth $jsonConversionDepth | Out-File $createUiDefinitionOutputPath -Encoding utf8
         }
