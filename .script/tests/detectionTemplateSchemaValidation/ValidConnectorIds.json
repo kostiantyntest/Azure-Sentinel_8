@@ -10,6 +10,7 @@
   "AkamaiSecurityEvents",
   "AlcideKAudit",
   "AlsidForAD",
+  "Anvilogic",
   "Armorblox",
   "ApacheHTTPServer",
   "ApacheTomcat",
@@ -150,6 +151,7 @@
   "QualysKB",
   "QualysVulnerabilityManagement",
   "RedCanaryDataConnector",
+  "RubrikSecurityCloudAzureFunctions",
   "SailPointIdentityNow",
   "SalesforceServiceCloud",
   "SAP",
@@ -263,5 +265,6 @@
   "Workday",
   "SamsungDCDefinition",
   "CommvaultSecurityIQ_CL",
-  "ExtraHop"
+  "ExtraHop",
+  "ContrastADR"
 ]
